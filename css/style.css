@@ -1,0 +1,45 @@
+.card {
+  align-items: center;
+}
+
+.card-img-top {
+}
+
+a {
+  color: darkgrey;
+}
+
+h1 {
+  align-self: right;
+}
+
+#toolTip {
+  background-color: black;
+  color: rgb(177, 177, 177);
+  border-radius: 5%;
+  padding: 5px;
+  z-index: 1000;
+}
+
+.nav-pills .nav-item.active {
+  background-color: red;
+}
+
+header{
+  background: rgb(29, 168, 192);
+}
+p{
+  font-size: small;
+}
+
+
+body {
+  background: rgb(43, 42, 42);
+  background-image: url("/img/20210729_195951.jpg");
+  background-size: 50%, auto;
+}
+
+.aboutSection{
+  border-radius: 15px;
+  opacity: 85%;
+}
