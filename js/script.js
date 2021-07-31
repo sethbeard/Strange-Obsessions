@@ -1,4 +1,4 @@
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const token = process.env.TOKEN;
 
 const mainContainer = document.getElementById("myData");
@@ -7,7 +7,8 @@ getData(1);
 
 function getValue(numRecs) {
   fetch(
-    "https://api.discogs.com/users/sean_mustache/collection/value?token=ZMpLltkvPGPzzMKzUmIXJrywjfsolSQzMZCkbbWU"
+    "https://api.discogs.com/users/sean_mustache/collection/value?&token=" +
+      token
   )
     .then((response) => response.json())
     .then((value) => createToolTip(value, numRecs));
@@ -47,7 +48,6 @@ function createTab(data, currentPage) {
         createData(num);
       };
     } else {
-      // page.className = "nav-link";
       page.onclick = function () {
         createData(num);
       };
@@ -60,8 +60,9 @@ function createTab(data, currentPage) {
   createData(1);
 }
 function getData(currentPage) {
+  console.log(token);
   fetch(
-    "https://api.discogs.com/users/sean_mustache/collection/folders/0/releases?sort=artist&per_page=30&page=" +
+    "https://api.discogs.com/users/sean_mustache/collection/folders/0/releases?sort=artist&per_page=39&page=" +
       currentPage +
       "&token=" +
       token
@@ -72,11 +73,9 @@ function getData(currentPage) {
 function createData(currentPage) {
   if (document.readyState == "complete") {
     let divId = "flex" + currentPage;
-    let contentDiv = document.getElementById(divId);
-
     if (!document.getElementById(divId).hasChildNodes()) {
       fetch(
-        "https://api.discogs.com/users/sean_mustache/collection/folders/0/releases?sort=artist&per_page=30&page=" +
+        "https://api.discogs.com/users/sean_mustache/collection/folders/0/releases?sort=artist&per_page=39&page=" +
           currentPage +
           "&token=" +
           token
@@ -174,7 +173,7 @@ function createModal(individualData) {
     );
   let link = document.getElementById("pageLink");
   link.href = individualData.uri;
-  let modalBody = document.getElementById("modalBody");
+  // let modalBody = document.getElementById("modalBody");
   let img = document.getElementById("modalImage");
   img.src = individualData.images[0].uri;
   img.height = "100";
@@ -195,7 +194,7 @@ function createModal(individualData) {
     let videoURL = individualData.videos[0].uri.split("v=");
 
     videoDiv.innerHTML =
-      '<iframe width="100%" height="auto"  src="https://www.youtube.com/embed/' +
+      '<iframe width="100%" height="356" src="https://www.youtube.com/embed/' +
       videoURL[1] +
       '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
   } else {

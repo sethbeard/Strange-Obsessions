@@ -9,25 +9,29 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
   <link rel="stylesheet" href="/css/style.css">
   <title>Strange Obsessions</title>
-
 </head>
 
 
 <body>
+  <!-- Visual Header  -->
   <header class="jumbotron jumbotron-fluid sticky-top">
     <div class="row align-items-center">
       <div class="col-m-1 m-3 col-2 align-items-center">
+
+        <!-- toggles tooltip card -->
         <a data-bs-toggle="collapse" data-bs-target="#toolTip">
           <button type="button" class="btn btn-dark">Collection Information</button>
         </a>
       </div>
+
       <div class="m-3 container col">
         <div class="m-3 d-flex align-items-end flex-column">
           <h1 class="text-end"><strong>Strange Obsessions<br></strong></h1>
-          <h3>A Discogs Visualizer</h3>
+          <h3 class="text-end">A Discogs Visualizer</h3>
         </div>
       </div>
     </div>
+    <!-- Pagination -->
     <ul class="nav nav-pills nav-justified bg-dark" id="pagination">
       <li class="nav-item">
         <a class="nav-link page-button" href="#about" role="pill" data-bs-toggle="pill">About</a>
@@ -35,6 +39,7 @@
     </ul>
   </header>
 
+    <!-- collection data. shows tooltip  -->
   <a data-bs-toggle="collapse" data-bs-target="#toolTip">
     <div class="card collapse card-body col-xs-12 position-fixed m-3 tool-collapse" id="toolTip"></div>
   </a>
@@ -43,6 +48,9 @@
     </div>
   </div>
 
+
+   main container.  This holds the tabs also
++
   <div class="container mainClass mt-sm-20" id="myData">
     <div class="tab-content" id="myTabContent">
       <div role="tabpanel" class="tab-pane fade text-white" id="about">

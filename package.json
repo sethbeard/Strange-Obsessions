@@ -1,7 +1,6 @@
 {
   "name": "discogstest",
   "version": "1.0.0",
-  "description": "",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,6 +16,16 @@
     "popper": "^1.0.1"
   },
   "devDependencies": {
-    "lite-server": "^2.6.1"
-  }
+    "lite-server": "^2.6.1",
+    "webpack-cli": "^4.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sethbeard/portfolio-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sethbeard/portfolio-project/issues"
+  },
+  "homepage": "https://github.com/sethbeard/portfolio-project#readme",
+  "description": ""
 }
