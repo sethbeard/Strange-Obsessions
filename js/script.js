@@ -1,4 +1,4 @@
-require("dotenv").config();
+
 
 $(function () {
   const token = process.env.TOKEN;
