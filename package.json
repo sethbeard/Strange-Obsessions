@@ -5,18 +5,27 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run lite",
-    "lite": "lite-server"
+    "lite": "lite-server",
+    "usemin": "usemin index.html -d dist --htmlmin -o dist/index.html",
+    "imagemin": "imagemin img/* -o dist/img",
+    "build": "npm run clean && npm run imagemin && npm run usemin",
+    "clean": "rimraf dist"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^4.5.2",
     "dotenv": "^10.0.0",
-    "jquery": "^3.6.0",
-    "passport-spotify": "^2.0.0",
-    "popper": "^1.0.1"
+    "jquery": "^3.5.1",
+    "netlify-cli": "^5.4.1",
+    "popper.js": "^1.16.1",
+    "requirejs": "^2.3.6"
   },
   "devDependencies": {
+    "imagemin-cli": "^5.1.0",
     "lite-server": "^2.6.1",
+    "rimraf": "^3.0.2",
+    "usemin-cli": "^0.6.0",
     "webpack-cli": "^4.7.2"
   },
   "repository": {
