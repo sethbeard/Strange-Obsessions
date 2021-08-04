@@ -9,8 +9,7 @@ a {
   color: darkgrey;
 }
 
-h1 
-h3 {
+h1 h3 {
   align-self: right;
 }
 
@@ -26,13 +25,12 @@ h3 {
   background-color: red;
 }
 
-header{
+header {
   background: rgb(29, 168, 192);
 }
-p{
+p {
   font-size: small;
 }
-
 
 body {
   background: rgb(43, 42, 42);
@@ -40,7 +38,7 @@ body {
   background-size: 50%, auto;
 }
 
-.aboutSection{
+.aboutSection {
   border-radius: 15px;
   opacity: 85%;
 }

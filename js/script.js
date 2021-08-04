@@ -1,11 +1,11 @@
-
-
 $(function () {
-  const token = process.env.TOKEN;
-
-  const mainContainer = document.getElementById("myData");
-
+  
+  const token = "";
+  $("#pagination").hide();
   getData(1);
+
+  let modalButton = document.getElementById("closeModal");
+  modalButton.addEventListener("click", function(){ $("#releaseModal").modal("hide");});
 
   function getValue(numRecs) {
     fetch(
@@ -21,7 +21,7 @@ $(function () {
     let nav = document.getElementById("pagination");
     numberOfRecords(data);
 
-    for (i = 1; i < data.pagination.pages; i++) {
+    for (i = 1; i <= data.pagination.pages; i++) {
       let li = document.createElement("li");
       li.className = "nav-item";
       let page = document.createElement("a");
@@ -59,6 +59,7 @@ $(function () {
       li.appendChild(page);
       nav.appendChild(li);
     }
+    $("#pagination").fadeIn("slow");
     createData(1);
   }
   function getData(currentPage) {
@@ -171,6 +172,7 @@ $(function () {
   }
 
   function createModal(individualData) {
+    
     console.log(individualData);
     let artistTitle = document.getElementById("modalTitle");
     artistTitle.innerHTML =
@@ -215,10 +217,12 @@ $(function () {
     $("#releaseModal").modal("show");
   }
 
-  function hideModal() {
-    $("#releaseModal").modal("hide");
-  }
 
+ 
+  function hideModal() {
+    
+  }
+  // deprecated function
   function clearScreen(element) {
     while (element.firstChild) {
       element.removeChild(element.firstChild);

@@ -17,9 +17,8 @@
     "bootstrap": "^4.5.2",
     "dotenv": "^10.0.0",
     "jquery": "^3.5.1",
-    "netlify-cli": "^5.4.1",
-    "popper.js": "^1.16.1",
-    "requirejs": "^2.3.6"
+    "popper.js": "^1.16.1"
+    
   },
   "devDependencies": {
     "imagemin-cli": "^5.1.0",

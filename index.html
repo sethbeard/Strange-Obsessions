@@ -20,7 +20,7 @@
   <!-- Visual Header  -->
   <header class="jumbotron jumbotron-fluid sticky-top">
     <div class="row align-items-center">
-      <div class="col-m-1 m-3 col-2 align-items-center">
+      <div class="col-md-1 m-3 col-2 align-items-center">
 
         <!-- toggles tooltip card -->
         <a data-bs-toggle="collapse" data-bs-target="#toolTip">
@@ -53,18 +53,17 @@
   </div>
 
 
-  main container. This holds the tabs also
-  +
+  <!-- main container. This holds the tabs also -->
   <div class="container mainClass mt-sm-20" id="myData">
     <div class="tab-content" id="myTabContent">
-      <div role="tabpanel" class="tab-pane fade text-white" id="about">
-        <div class="row justify-content-center mt-8  text-decoration-none ">
+      <div role="tabpanel" class="tab-pane fade text-white " id="about">
+        <div class="row justify-content-center  mt-8  text-decoration-none ">
           <a class="text-decoration-none" data-bs-toggle="collapse" data-bs-target="#use">
-            <div class="col-12 col-m-6 bg-dark d-flex justify-content-center mt-4 p-3 aboutSection">
+            <div class="col-12 col-md-6 offset-md-3 bg-dark d-flex justify-content-center mt-4 p-3 aboutSection">
               <strong>How to use the site:</strong>
             </div>
           </a>
-          <div class="col-6 collapse" id="use">
+          <div class="col-md-6 col-12 collapse about-content" id="use">
             <ul>
               <li>Clicking Collection Information in the top left will show the number of records in the collection
                 and the value.</li>
@@ -79,18 +78,17 @@
         </div>
         <div class="row justify-content-center mt-8  ">
           <a class="text-decoration-none" data-bs-toggle="collapse" data-bs-target="#moreAbout">
-            <div class="col-12 col-m-6 bg-dark d-flex justify-content-center mt-4 p-3 aboutSection">
+            <div class="col-12 col-md-6 offset-md-3 bg-dark d-flex justify-content-center mt-4 p-3 aboutSection">
               <strong>About the site:</strong>
             </div>
           </a>
-          <div class="col-6 collapse" id="moreAbout">
+          <div class="col-md-6 col-xs-12 collapse about-content" id="moreAbout">
             <ul>
               <li>A one page site created primarily with bootstrap</li>
               <li>Information is pulled from Discogs via api and rendered dynamically on the page.</li>
               <li>Once a tab has loaded once it will not be loaded again until the page is refreshed.</li>
             </ul>
           </div>
-
         </div>
       </div>
     </div>
@@ -104,40 +102,31 @@
           <a href="" target="blank" id="pageLink">
             <h3 class="modal-title" id="modalTitle"></h3>
           </a>
-          <button type="button" class="close" onclick="hideModal()">&times;</button>
+          <button type="button" class="close" id="closeModal">&times;</button>
         </div>
         <div class="modal-body">
           <div class="row row-content  align-items-center">
             <div class="media col-sm-4 col-md-3" id="modalBody">
               <img class="ml-3 img-thumbnail" src="" id="modalImage" />
               <div class="media body" id="mediaBody">
-
               </div>
             </div>
-
-
             <div class="col" id="video">
-
-
             </div>
-
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
-  
-  <!-- build:js js/main.js -->
+
+
   <script src="node_modules/jquery/dist/jquery.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <!-- <script src="/node_modules/requirejs/require.js"></script> -->
+  <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
   <script src="js/script.js"></script>
- 
-  <!-- endbuild -->
-  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
 
 </body>
 
