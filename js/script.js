@@ -1,51 +1,67 @@
 $(function () {
-  
+  //token used for all of the api calls
   const token = "";
+  // this makes sure the pagination is hidden on load since it takes a second to create all of the tabs
   $("#pagination").hide();
+
+  // this calls the main function to start creating everything
   getData(1);
 
+  // was having trouble with the modal close button so added this to fix it.
   let modalButton = document.getElementById("closeModal");
-  modalButton.addEventListener("click", function(){ $("#releaseModal").modal("hide");});
+  modalButton.addEventListener("click", function () {
+    $("#releaseModal").modal("hide");
+  });
 
-  function getValue(numRecs) {
+  // this is the first API call.  This is mainly to get the initial data for the number of pages present in the json file.   Once called, it sends it over to the createTab option.
+  function getData(currentPage) {
     fetch(
-      "https://api.discogs.com/users/sean_mustache/collection/value?&token=" +
+      "https://api.discogs.com/users/sean_mustache/collection/folders/0/releases?sort=artist&per_page=39&page=" +
+        currentPage +
+        "&token=" +
         token
     )
       .then((response) => response.json())
-      .then((value) => createToolTip(value, numRecs));
+      .then((data) => createTab(data));
   }
 
-  function createTab(data, currentPage) {
+  //this function creates all of the tabs and all of the tab-panes for the site.
+
+  function createTab(data) {
+    //this is the main tab div (the container that holes all of the tab panes)
     let tabContent = document.getElementById("myTabContent");
     let nav = document.getElementById("pagination");
+    //starts getting the number of records and the values to create the small pop-up
     numberOfRecords(data);
 
+    // creates a tab and a tab-pane for the number of pages reported back in the json file
     for (i = 1; i <= data.pagination.pages; i++) {
       let li = document.createElement("li");
       li.className = "nav-item";
-      let page = document.createElement("a");
+
       let num = i;
+
       let contentDiv = document.createElement("div");
+      contentDiv.className =
+        "row col align-items-center mx-auto d-flex justify-content-center";
+      contentDiv.id = "flex" + num;
+
       let tabPane = document.createElement("div");
       tabPane.className = "tab-pane fade";
+      tabPane.id = "contentDiv" + num;
+      tabPane.setAttribute("data-created", false);
+      tabPane.setAttribute("role", "tabpanel");
+
+      let page = document.createElement("a");
       page.className = "nav-link page-button";
       page.href = "#contentDiv" + num;
       page.setAttribute("role", "pill");
       page.setAttribute("data-bs-toggle", "pill");
+      page.innerHTML = num;
 
-      contentDiv.className =
-        "row col align-items-center mx-auto d-flex justify-content-center";
-      contentDiv.id = "flex" + num;
-      tabPane.id = "contentDiv" + i;
-      tabPane.setAttribute("data-created", false);
-      tabPane.setAttribute("role", "tabpanel");
-      page.innerHTML = i;
       if (i == 1) {
-        let num = i;
         tabPane.className += " show active";
         page.className += " active";
-
         page.onclick = function () {
           createData(num);
         };
@@ -54,25 +70,18 @@ $(function () {
           createData(num);
         };
       }
+
       tabPane.appendChild(contentDiv);
       tabContent.appendChild(tabPane);
       li.appendChild(page);
       nav.appendChild(li);
     }
+
     $("#pagination").fadeIn("slow");
-    createData(1);
+    appendData(data, 1);
   }
-  function getData(currentPage) {
-    console.log(token);
-    fetch(
-      "https://api.discogs.com/users/sean_mustache/collection/folders/0/releases?sort=artist&per_page=39&page=" +
-        currentPage +
-        "&token=" +
-        token
-    )
-      .then((response) => response.json())
-      .then((data) => createTab(data, currentPage));
-  }
+
+  //checks if the page has been made yet and if not then runs the appendData option which creates the cards for the page.
   function createData(currentPage) {
     if (document.readyState == "complete") {
       let divId = "flex" + currentPage;
@@ -88,37 +97,47 @@ $(function () {
       }
     }
   }
+
+  //quick function to toggle the spinner
   function spinner(toggle) {
     $("#status").collapse(toggle);
   }
 
+  // the main function for creating each card.  Starts by hiding the tab-content area and showing the spinner
   function appendData(data, currentPage) {
     spinner("show");
     $(".tab-content").hide(400);
 
     let contentDiv = document.getElementById("flex" + currentPage);
-    data.releases.forEach((release) => {
-      let record = release;
+    data.releases.forEach((record) => {
       let card = document.createElement("div");
       card.className =
         "card col-12 col-md-5 col-lg-5 col-xl-3 bg-secondary m-3 pt-2";
-      let image = document.createElement("img");
       card.onclick = function () {
         getModal(record.id);
       };
       card.id = "card-" + record.id;
-      image.className = "card-img-top m-1";
-      image.src = record.basic_information.cover_image;
+
       let div = document.createElement("div");
+       div.className = "card-body bg-secondary text-white col-7";
+       div.innerHTML =
+         "<strong>Artist:</strong><br>" +
+         record.basic_information.artists[0].name.replace(
+           / ((\(\d)\)) */g,
+           ""
+         ) +
+         "<br/>" +
+         "<strong>Title:</strong><br>" +
+         record.basic_information.title;
+
       let row = document.createElement("div");
       row.className = "row col-12";
-      div.className = "card-body bg-secondary text-white col-7";
-      div.innerHTML =
-        "<strong>Artist:</strong><br>" +
-        record.basic_information.artists[0].name.replace(/ ((\(\d)\)) */g, "") +
-        "<br/>" +
-        "<strong>Title:</strong><br>" +
-        record.basic_information.title;
+
+      let image = document.createElement("img");
+      image.className = "card-img-top m-1";
+      image.src = record.basic_information.cover_image;
+      
+      //Pulls the genre information and writes it to the card.  Since genres can be endless, it picks the first three. 
       let genres = "";
       for (
         let i = 0;
@@ -127,16 +146,17 @@ $(function () {
       ) {
         genres += "<br/>" + record.basic_information.styles[i];
       }
-
       let genreDiv = document.createElement("div");
       genreDiv.className = "text-end col-5 text-white bg-secondary card-body";
       genreDiv.innerHTML = "<strong>Genres:</strong>" + genres;
+
       card.appendChild(image);
       row.appendChild(div);
       row.appendChild(genreDiv);
       card.appendChild(row);
       contentDiv.appendChild(card);
     });
+//hides the spinner and then shows the tab-pane area
     setTimeout(function () {
       spinner("hide");
     }, 1400);
@@ -145,8 +165,16 @@ $(function () {
     }, 1700);
   }
 
+  //gets the number of records and the value of the collection and sends them to create the tooltip.
+  
   function numberOfRecords(data) {
-    getValue(data.pagination.items);
+    let numRecs = data.pagination.items;
+    fetch(
+      "https://api.discogs.com/users/sean_mustache/collection/value?&token=" +
+        token
+    )
+      .then((response) => response.json())
+      .then((value) => createToolTip(value, numRecs));
   }
 
   function createToolTip(value, numRecs) {
@@ -162,6 +190,7 @@ $(function () {
       value.maximum;
   }
 
+  //gets the data for the modal of the release clicked
   function getModal(discogsId) {
     console.log(discogsId);
     fetch(
@@ -172,7 +201,6 @@ $(function () {
   }
 
   function createModal(individualData) {
-    
     console.log(individualData);
     let artistTitle = document.getElementById("modalTitle");
     artistTitle.innerHTML =
@@ -208,24 +236,12 @@ $(function () {
         '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
     } else {
       videoDiv.innerHTML =
-        "No Video Available :(  <a href='https://www.youtube.com/results?search_query=" +
+        "No Video Available :( <br> <a href='https://www.youtube.com/results?search_query=" +
         (individualData.artists[0].name + " " + individualData.title)
           .replace(/ ((\(\d)\)) */g, "")
           .replace(/ (" ") */g, "+") +
         "' target='blank'> Click Here to search Youtube for videos </a>";
     }
     $("#releaseModal").modal("show");
-  }
-
-
- 
-  function hideModal() {
-    
-  }
-  // deprecated function
-  function clearScreen(element) {
-    while (element.firstChild) {
-      element.removeChild(element.firstChild);
-    }
   }
 });

@@ -8,9 +8,7 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
-  <!-- build:css css/main.css -->
   <link rel="stylesheet" href="/css/style.css">
-  <!-- endbuild -->
 
   <title>Strange Obsessions</title>
 </head>
@@ -27,7 +25,6 @@
           <button type="button" class="btn btn-dark">Collection Information</button>
         </a>
       </div>
-
       <div class="m-3 container col">
         <div class="m-3 d-flex align-items-end flex-column">
           <h1 class="text-end"><strong>Strange Obsessions<br></strong></h1>
@@ -35,6 +32,7 @@
         </div>
       </div>
     </div>
+
     <!-- Pagination -->
     <ul class="nav nav-pills nav-justified bg-dark" id="pagination">
       <li class="nav-item">
@@ -56,6 +54,8 @@
   <!-- main container. This holds the tabs also -->
   <div class="container mainClass mt-sm-20" id="myData">
     <div class="tab-content" id="myTabContent">
+
+      <!-- the about tab -->
       <div role="tabpanel" class="tab-pane fade text-white " id="about">
         <div class="row justify-content-center  mt-8  text-decoration-none ">
           <a class="text-decoration-none" data-bs-toggle="collapse" data-bs-target="#use">
@@ -95,6 +95,8 @@
   </div>
   </div>
   </div>
+
+  <!-- This is the release modal, it is re-written every time an image is clicked, so only one modal exists (this is how the youtube video keeps playing in the background) -->
   <div id="releaseModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content bg-dark text-light">
