@@ -1,6 +1,5 @@
 $(function () {
   //token used for all of the api calls
-  const token = "";
   // this makes sure the pagination is hidden on load since it takes a second to create all of the tabs
   $("#pagination").hide();
 
@@ -15,12 +14,7 @@ $(function () {
 
   // this is the first API call.  This is mainly to get the initial data for the number of pages present in the json file.   Once called, it sends it over to the createTab option.
   function getData(currentPage) {
-    fetch(
-      "https://api.discogs.com/users/sean_mustache/collection/folders/0/releases?sort=artist&per_page=39&page=" +
-        currentPage +
-        "&token=" +
-        token
-    )
+    fetch("https://strange-obsessions-be.glitch.me/getRecords/" + currentPage)
       .then((response) => response.json())
       .then((data) => createTab(data));
   }
@@ -28,7 +22,7 @@ $(function () {
   //this function creates all of the tabs and all of the tab-panes for the site.
 
   function createTab(data) {
-    //this is the main tab div (the container that holes all of the tab panes)
+    //this is the main tab div (the container that holds all of the tab panes)
     let tabContent = document.getElementById("myTabContent");
     let nav = document.getElementById("pagination");
     //starts getting the number of records and the values to create the small pop-up
@@ -87,29 +81,34 @@ $(function () {
       let divId = "flex" + currentPage;
       if (!document.getElementById(divId).hasChildNodes()) {
         fetch(
-          "https://api.discogs.com/users/sean_mustache/collection/folders/0/releases?sort=artist&per_page=39&page=" +
-            currentPage +
-            "&token=" +
-            token
+          "https://strange-obsessions-be.glitch.me/getRecords/" + currentPage
         )
           .then((response) => response.json())
           .then((data) => appendData(data, currentPage));
       }
     }
   }
-
+  const getImageUrl = async (url, discogsId) => {
+    let imgURL = await fetch(
+      "https://strange-obsessions-be.glitch.me/image/?url=" +
+        url +
+        "&discogsId=" +
+        discogsId
+    );
+    let x = await imgURL.text();
+    return x;
+  };
   //quick function to toggle the spinner
   function spinner(toggle) {
     $("#status").collapse(toggle);
   }
 
   // the main function for creating each card.  Starts by hiding the tab-content area and showing the spinner
-  function appendData(data, currentPage) {
+  const appendData = async (data, currentPage) => {
     spinner("show");
     $(".tab-content").hide(400);
-
     let contentDiv = document.getElementById("flex" + currentPage);
-    data.releases.forEach((record) => {
+    data.releases.forEach(async (record) => {
       let card = document.createElement("div");
       card.className =
         "card col-12 col-md-5 col-lg-5 col-xl-3 bg-secondary m-3 pt-2";
@@ -119,25 +118,29 @@ $(function () {
       card.id = "card-" + record.id;
 
       let div = document.createElement("div");
-       div.className = "card-body bg-secondary text-white col-7";
-       div.innerHTML =
-         "<strong>Artist:</strong><br>" +
-         record.basic_information.artists[0].name.replace(
-           / ((\(\d)\)) */g,
-           ""
-         ) +
-         "<br/>" +
-         "<strong>Title:</strong><br>" +
-         record.basic_information.title;
+      div.className = "card-body bg-secondary text-white col-7";
+      div.innerHTML =
+        "<strong>Artist:</strong><br>" +
+        record.basic_information.artists[0].name.replace(/ ((\(\d)\)) */g, "") +
+        "<br/>" +
+        "<strong>Title:</strong><br>" +
+        record.basic_information.title;
 
       let row = document.createElement("div");
       row.className = "row col-12";
 
       let image = document.createElement("img");
       image.className = "card-img-top m-1";
-      image.src = record.basic_information.cover_image;
-      
-      //Pulls the genre information and writes it to the card.  Since genres can be endless, it picks the first three. 
+      let imgURL = getImageUrl(record.basic_information.cover_image, record.id);
+      image.src = await imgURL;
+      image.onError =
+        "this.onerror=null; this.src=https://strange-obsessions-be.glitch.me/" +
+        record.id +
+        ".jpg";
+
+      image.referrerPolicy = "no-referrer";
+
+      //Pulls the genre information and writes it to the card.  Since genres can be endless, it picks the first three.
       let genres = "";
       for (
         let i = 0;
@@ -156,23 +159,20 @@ $(function () {
       card.appendChild(row);
       contentDiv.appendChild(card);
     });
-//hides the spinner and then shows the tab-pane area
+    //hides the spinner and then shows the tab-pane area
     setTimeout(function () {
       spinner("hide");
     }, 1400);
     setTimeout(function () {
       $(".tab-content").fadeIn("slow");
     }, 1700);
-  }
+  };
 
   //gets the number of records and the value of the collection and sends them to create the tooltip.
-  
+
   function numberOfRecords(data) {
     let numRecs = data.pagination.items;
-    fetch(
-      "https://api.discogs.com/users/sean_mustache/collection/value?&token=" +
-        token
-    )
+    fetch("https://strange-obsessions-be.glitch.me/value")
       .then((response) => response.json())
       .then((value) => createToolTip(value, numRecs));
   }
@@ -192,16 +192,12 @@ $(function () {
 
   //gets the data for the modal of the release clicked
   function getModal(discogsId) {
-    console.log(discogsId);
-    fetch(
-      "https://api.discogs.com/releases/" + discogsId + "?usd&token=" + token
-    )
+    fetch("https://strange-obsessions-be.glitch.me/releases/" + discogsId)
       .then((response) => response.json())
       .then((individualData) => createModal(individualData));
   }
 
   function createModal(individualData) {
-    console.log(individualData);
     let artistTitle = document.getElementById("modalTitle");
     artistTitle.innerHTML =
       "" +
@@ -211,8 +207,13 @@ $(function () {
       );
     let link = document.getElementById("pageLink");
     link.href = individualData.uri;
+    console.log(individualData);
     let img = document.getElementById("modalImage");
-    img.src = individualData.images[0].uri;
+    img.src = individualData.images[0].uri150;
+    img.onerror =
+      "this.onerror=null; this.src=https://strange-obsessions-be.glitch.me/" +
+      individualData.id +
+      ".jpg";
     img.height = "100";
     let mediaBody = document.getElementById("mediaBody");
     mediaBody.innerHTML =
