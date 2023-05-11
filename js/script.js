@@ -1,5 +1,4 @@
 $(function () {
-  //token used for all of the api calls
   // this makes sure the pagination is hidden on load since it takes a second to create all of the tabs
   $("#pagination").hide();
 
