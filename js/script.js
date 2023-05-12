@@ -31,7 +31,6 @@ $(function () {
     for (i = 1; i <= data.pagination.pages; i++) {
       let li = document.createElement("li");
       li.className = "nav-item";
-
       let num = i;
 
       let contentDiv = document.createElement("div");
@@ -76,7 +75,7 @@ $(function () {
 
   //checks if the page has been made yet and if not then runs the appendData option which creates the cards for the page.
   function createData(currentPage) {
-    if (document.readyState == "complete") {
+    if (document.readyState === "complete") {
       let divId = "flex" + currentPage;
       if (!document.getElementById(divId).hasChildNodes()) {
         fetch(

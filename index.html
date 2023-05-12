@@ -52,7 +52,11 @@
     <div class="card collapse card-body col-xs-12 position-fixed m-3 tool-collapse" id="toolTip"></div>
   </a>
   <div class="row mt-4 pt-5 col-12 justify-content-center collapse text-center" id="status">
-    <div class="spinner-grow text-primary" role="status">
+    <div id="status">
+      <div class="spinner-grow" role="status">
+
+      </div>
+      <div>Loading</div>
     </div>
   </div>
 
@@ -104,13 +108,13 @@
 
   <!-- This is the release modal, it is re-written every time an image is clicked, so only one modal exists (this is how the youtube video keeps playing in the background) -->
   <div id="releaseModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content bg-dark text-light">
         <div class="modal-header sticky-top bg-dark align-items-center" id="modalHeader">
           <a href="" target="blank" id="pageLink">
             <h3 class="modal-title" id="modalTitle"></h3>
           </a>
-          <button type="button" class="close" id="closeModal">&times;</button>
+          <div type="button" class="closeButton" id="closeModal">x</div>
         </div>
         <div class="modal-body">
           <div class="row row-content  align-items-center">

@@ -1,43 +1,96 @@
 .card {
   align-items: center;
+  cursor: pointer;
+  background-color: #212529 !important;
 }
-
-.card-img-top {
-}
-
 a {
-  color: darkgrey;
+  text-decoration: none;
+}
+a:hover {
+  color: rgb(29, 168, 192);
+}
+.modal-content {
+  margin-top: 12.5vh;
+}
+.modal-body {
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+}
+.modal-body .row-content {
+  height: 100%;
+}
+#mediaBody a {
+  color: rgb(29, 168, 192);
+}
+.card-body {
+  background-color: #212529 !important;
+  color: white !important;
 }
 
 h1 h3 {
   align-self: right;
 }
-
+#status {
+  color: rgb(29, 168, 192);
+}
 #toolTip {
-  background-color: black;
+  background-color: #232323;
   color: rgb(177, 177, 177);
   border-radius: 5%;
   padding: 5px;
   z-index: 1000;
 }
-
-.nav-pills .nav-item.active {
-  background-color: red;
+.modal-header {
+  background-image: linear-gradient(
+    90deg,
+    white 80%,
+    rgb(29, 168, 192)
+  ) !important;
+}
+.modal-header a {
+  color: #212529;
+}
+.modal-header a:hover {
+  color: rgb(29, 168, 192);
+}
+.closeButton {
+  background-color: #212529;
+  color: white;
+  border: unset;
+  padding: 5px 10px;
+  border-radius: 3px;
+  padding-top: 1px;
 }
 
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-lin {
+  background-color: white;
+  color: #212529;
+  border-radius: 0;
+}
+.nav-link {
+  color: white;
+}
+.nav-link:hover {
+  color: rgb(29, 168, 192);
+}
 header {
-  background: rgb(29, 168, 192);
+  background-image: linear-gradient(90deg, white 80%, rgb(29, 168, 192));
 }
 p {
   font-size: small;
 }
 
 body {
-  background: rgb(43, 42, 42);
+  background: rgb(255, 255, 255);
   background-image: url("/img/20210729_195951.jpg");
   background-size: 50%, auto;
+  background-blend-mode: exclusion;
 }
-
+#media-body > a {
+  color: white !important;
+}
 .aboutSection {
   border-radius: 15px;
   opacity: 85%;
